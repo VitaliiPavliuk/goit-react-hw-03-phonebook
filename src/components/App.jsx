@@ -7,9 +7,15 @@ import Filter from './Filter/Filter';
 
 class App extends Component {
   state = {
-    contacts: [],
+    contacts: JSON.parse(localStorage.getItem('contacts')) ?? [],
     filter: '',
   };
+
+  componentDidUpdate(_, Prevstate) {
+    if (Prevstate.contacts.length !== this.state.contacts.length) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
 
   onAddContact = contact => {
     if (
